@@ -24,8 +24,8 @@ export const Layout = ({ children, hasMenuBottom = false }: LayoutProps) => {
           />
           <MenuBottom.Icon
             icon={ListEnd}
-            action={'/listagem'}
-            active={param === '/listagem'}
+            action={'/lista-de-produtos'}
+            active={param === '/lista-de-produtos'}
           />
           <MenuBottom.Icon
             icon={ScanBarcode}

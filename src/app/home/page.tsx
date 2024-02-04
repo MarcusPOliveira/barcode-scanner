@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { Header, Layout, Shortcuts } from '@/components'
 
-export default function Home() {
+const Home = () => {
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
@@ -21,3 +21,5 @@ export default function Home() {
     </Layout>
   )
 }
+
+export default Home
