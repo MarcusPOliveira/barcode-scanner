@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-import { Header, Layout } from '@/components'
+import { Header, Layout, Shortcuts } from '@/components'
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false)
@@ -15,8 +15,9 @@ export default function Home() {
   }
 
   return (
-    <Layout>
+    <Layout hasMenuBottom>
       <Header />
+      <Shortcuts />
     </Layout>
   )
 }
