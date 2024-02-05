@@ -51,8 +51,12 @@ type GroupedProducts = {
 export const ProductsList = () => {
   const [products, setProducts] = useState<Product[]>(ProductsListMock)
 
-  const groupedProducts: GroupedProducts[] = products
-    .reduce((acc, product) => {
+  const sortedProducts = [...products].sort(
+    (a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime(),
+  )
+
+  const groupedProducts: GroupedProducts[] = sortedProducts.reduce(
+    (acc, product) => {
       const { date, time } = formatDatetime(product.datetime)
       const groupIndex = acc.findIndex((group) => group.date === date)
 
@@ -70,12 +74,11 @@ export const ProductsList = () => {
       }
 
       return acc
-    }, [] as GroupedProducts[])
-    .sort(
-      (a, b) =>
-        new Date(`${a.date} ${a.products[0].time}`).getTime() -
-        new Date(`${b.date} ${b.products[0].time}`).getTime(),
-    )
+    },
+    [] as GroupedProducts[],
+  )
+
+  console.log('groupedProducts', groupedProducts)
 
   const toggleSelect = (id: string) => {
     setProducts(
