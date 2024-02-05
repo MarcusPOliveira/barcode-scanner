@@ -1,10 +1,23 @@
 'use client'
-import { Layout } from '@/components'
+import { useEffect, useState } from 'react'
+
+import { Header, Layout, ProductsList } from '@/components'
 
 const ListaDeProdutos = () => {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) {
+    return null
+  }
+
   return (
     <Layout hasMenuBottom>
-      <div>ListaDeProdutos</div>
+      <Header />
+      <ProductsList />
     </Layout>
   )
 }
