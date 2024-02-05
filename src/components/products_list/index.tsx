@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 import { formatDatetime } from '@/utils'
 import { ProductCard } from './product_card'
@@ -78,8 +79,6 @@ export const ProductsList = () => {
     [] as GroupedProducts[],
   )
 
-  console.log('groupedProducts', groupedProducts)
-
   const toggleSelect = (id: string) => {
     setProducts(
       products.map((product) =>
@@ -90,11 +89,29 @@ export const ProductsList = () => {
     )
   }
 
-  console.log('groupedProducts', groupedProducts)
+  const toggleSelectAll = () => {
+    const allSelected = products.every((product) => product.isSelected)
+
+    setProducts(
+      products.map((product) => ({
+        ...product,
+        isSelected: !allSelected,
+      })),
+    )
+  }
 
   return (
     <section className="scrollbar-hide h-full overflow-auto py-10">
-      <p className="text-xl font-bold">Lista de Produtos</p>
+      <div className="flex items-center justify-between">
+        <p className="text-xl font-bold">Lista de Produtos</p>
+        <motion.span
+          className="text-sm"
+          onClick={toggleSelectAll}
+          whileTap={{ scale: 0.9 }}
+        >
+          Selecionar todos
+        </motion.span>
+      </div>
       <div className="flex flex-col items-center justify-center">
         {groupedProducts.map((group, groupIndex) => (
           <div key={groupIndex} className="mt-5 flex w-full flex-col gap-4">

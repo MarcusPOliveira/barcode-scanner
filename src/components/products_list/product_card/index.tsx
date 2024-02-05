@@ -24,7 +24,7 @@ export const ProductCard = ({
   return (
     <div
       key={`product_card_${id}_${ean}_${datetime}`}
-      className="flex min-h-[80px] w-full justify-between rounded-2xl px-4 odd:bg-slate-100 even:bg-slate-200"
+      className="flex min-h-[80px] w-full justify-between rounded-2xl px-4 odd:bg-slate-300 even:bg-slate-200"
     >
       <div className="flex items-center gap-4">
         <Checkbox checked={isSelected} setChecked={setIsSelected} />
