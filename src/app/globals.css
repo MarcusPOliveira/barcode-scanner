@@ -3,25 +3,21 @@
 @tailwind utilities;
 
 @layer base {
-	body {
-		@apply bg-white text-zinc-800;
-	}
+  body {
+    @apply bg-white text-zinc-800;
+  }
 }
 
 .container {
-	@apply mx-auto w-full max-w-[1200px] px-6;
+  @apply mx-auto w-full max-w-[1200px] px-6;
 }
 
-*::-webkit-scrollbar {
-	width: 8px;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
-*::-webkit-scrollbar-track {
-	background: #374151;
-	border-radius: 5px;
-}
-
-*::-webkit-scrollbar-thumb {
-	background-color: #27274d;
-	border-radius: 14px;
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
