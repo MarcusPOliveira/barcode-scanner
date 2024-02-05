@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-import { Header, Layout, ProductsList } from '@/components'
+import { Button, Header, Layout, ProductsList } from '@/components'
+import { ListEnd } from 'lucide-react'
 
 const ListaDeProdutos = () => {
   const [isMounted, setIsMounted] = useState(false)
@@ -18,6 +19,10 @@ const ListaDeProdutos = () => {
     <Layout hasMenuBottom>
       <Header />
       <ProductsList />
+      <Button className="mt-4 w-full bg-emerald-400 font-medium text-zinc-800">
+        <ListEnd />
+        Adicionar
+      </Button>
     </Layout>
   )
 }
