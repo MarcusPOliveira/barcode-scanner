@@ -42,6 +42,30 @@ const ProductsListMock: Product[] = [
     datetime: '2024-01-15 12:00:00',
     isSelected: true,
   },
+  {
+    id: '1',
+    ean: '7891234567890',
+    datetime: '2024-01-16 10:00:00',
+    isSelected: false,
+  },
+  {
+    id: '2',
+    ean: '7891234567891',
+    datetime: '2024-01-16 11:00:00',
+    isSelected: false,
+  },
+  {
+    id: '3',
+    ean: '7891234567892',
+    datetime: '2024-01-17 12:00:00',
+    isSelected: true,
+  },
+  {
+    id: '4',
+    ean: '7891234567893',
+    datetime: '2024-01-15 12:00:00',
+    isSelected: true,
+  },
 ]
 
 type GroupedProducts = {
@@ -101,7 +125,7 @@ export const ProductsList = () => {
   }
 
   return (
-    <section className="scrollbar-hide h-full overflow-auto py-10">
+    <section className="scrollbar-hide ssm h-[400px] overflow-y-auto py-6">
       <div className="flex items-center justify-between">
         <p className="text-xl font-bold">Lista de Produtos</p>
         <motion.span
