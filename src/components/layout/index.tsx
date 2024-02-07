@@ -14,7 +14,7 @@ export const Layout = ({ children, hasMenuBottom = false }: LayoutProps) => {
 
   return (
     <div className="container fixed inset-0 flex h-screen w-screen flex-col overflow-hidden">
-      <main className="h-full w-full py-4">{children}</main>
+      <main className="h-full w-full pb-40 pt-4">{children}</main>
       {hasMenuBottom && (
         <MenuBottom.Root>
           <MenuBottom.Icon

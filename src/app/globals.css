@@ -12,6 +12,12 @@
   @apply mx-auto w-full max-w-[1200px] px-6;
 }
 
+.ssm {
+  @media (max-height: 668px) {
+    height: 400px;
+  }
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
