@@ -1,3 +1,4 @@
+/* eslint-disable n/handle-callback-err */
 'use client'
 import { useEffect, useState } from 'react'
 import {
