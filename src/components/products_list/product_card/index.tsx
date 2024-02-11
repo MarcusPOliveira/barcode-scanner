@@ -12,6 +12,7 @@ type ProductCardProps = {
   datetime: string
   isSelected: boolean
   setIsSelected: (isSelected: boolean) => void
+  handleDeleteItem: (id: string) => void
 }
 
 export const ProductCard = ({
@@ -20,6 +21,7 @@ export const ProductCard = ({
   datetime,
   isSelected = false,
   setIsSelected,
+  handleDeleteItem,
 }: ProductCardProps) => {
   const [isAct, setIsAct] = useState(0)
   const [showAct, setShowAct] = useState(true)
@@ -45,10 +47,6 @@ export const ProductCard = ({
     hidden: {
       translateX: -60,
     },
-  }
-
-  const handleDeleteItem = () => {
-    console.log('Apagando item')
   }
 
   console.log('showAct', showAct)
@@ -93,9 +91,13 @@ export const ProductCard = ({
       </motion.div>
       <Alert
         title="Apagar"
-        message="Tem certeza que deseja apagar esse item?"
+        message="Tem certeza que deseja excluir esse item?"
         isOpen={isOpenAlert}
-        handleConfirm={() => handleDeleteItem()}
+        handleConfirm={() => {
+          handleDeleteItem(id)
+          setShowAct(!showAct)
+          setIsOpenAlert(false)
+        }}
         handleCancel={() => {
           setShowAct(!showAct)
           setIsOpenAlert(false)

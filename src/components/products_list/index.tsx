@@ -43,27 +43,39 @@ const ProductsListMock: Product[] = [
     isSelected: true,
   },
   {
-    id: '1',
-    ean: '7891234567890',
-    datetime: '2024-01-16 10:00:00',
+    id: '5',
+    ean: '7891234567894',
+    datetime: '2024-01-18 13:00:00',
     isSelected: false,
   },
   {
-    id: '2',
-    ean: '7891234567891',
-    datetime: '2024-01-16 11:00:00',
-    isSelected: false,
-  },
-  {
-    id: '3',
-    ean: '7891234567892',
-    datetime: '2024-01-17 12:00:00',
+    id: '6',
+    ean: '7891234567895',
+    datetime: '2024-01-19 14:00:00',
     isSelected: true,
   },
   {
-    id: '4',
-    ean: '7891234567893',
-    datetime: '2024-01-15 12:00:00',
+    id: '7',
+    ean: '7891234567896',
+    datetime: '2024-01-20 15:00:00',
+    isSelected: false,
+  },
+  {
+    id: '8',
+    ean: '7891234567897',
+    datetime: '2024-01-21 16:00:00',
+    isSelected: true,
+  },
+  {
+    id: '9',
+    ean: '7891234567898',
+    datetime: '2024-01-22 17:00:00',
+    isSelected: false,
+  },
+  {
+    id: '10',
+    ean: '7891234567899',
+    datetime: '2024-01-23 18:00:00',
     isSelected: true,
   },
 ]
@@ -124,6 +136,10 @@ export const ProductsList = () => {
     )
   }
 
+  const handleDeleteItem = (id: string) => {
+    setProducts((products) => products.filter((product) => product.id !== id))
+  }
+
   return (
     <section className="scrollbar-hide ssm h-[400px] overflow-y-auto py-6">
       <div className="flex items-center justify-between">
@@ -155,6 +171,7 @@ export const ProductsList = () => {
                 datetime={product.datetime}
                 isSelected={product.isSelected}
                 setIsSelected={() => toggleSelect(product.id)}
+                handleDeleteItem={() => handleDeleteItem(product.id)}
               />
             ))}
           </div>
