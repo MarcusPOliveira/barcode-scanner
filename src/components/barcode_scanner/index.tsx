@@ -1,38 +1,58 @@
 'use client'
-import { useState } from 'react'
-import { useZxing } from 'react-zxing'
-import { BarcodeFormat, DecodeHintType } from '@zxing/library'
+import { useEffect, useState } from 'react'
+import {
+  Html5QrcodeScanner,
+  Html5Qrcode,
+  Html5QrcodeSupportedFormats,
+} from 'html5-qrcode'
 
 export const BarCodeScanner = () => {
-  const [result, setResult] = useState('')
+  const [scanResult, setScanResult] = useState('')
 
-  const hints = new Map()
-  // const formats = [
-  //   BarcodeFormat.QR_CODE,
-  //   BarcodeFormat.DATA_MATRIX,
-  //   BarcodeFormat.CODE_128,
-  //   BarcodeFormat.EAN_13,
-  //   BarcodeFormat.EAN_8,
-  //   BarcodeFormat.CODE_39,
-  // ]
+  useEffect(() => {
+    const scanner = new Html5Qrcode('reader')
 
-  hints.set('POSSIBLE_FORMATS', ['CODE_128', 'EAN_13', 'EAN_8', 'CODE_39'])
+    const config = {
+      fps: 10,
+      qrbox: 250,
+      formatsToSupport: [
+        Html5QrcodeSupportedFormats.CODE_128,
+        Html5QrcodeSupportedFormats.EAN_13,
+        Html5QrcodeSupportedFormats.CODE_39,
+        Html5QrcodeSupportedFormats.CODE_93,
+        Html5QrcodeSupportedFormats.DATA_MATRIX,
+        Html5QrcodeSupportedFormats.EAN_8,
+      ],
+    }
 
-  const { ref } = useZxing({
-    onDecodeResult(result) {
-      setResult(result.getText())
-    },
-    hints,
-  })
+    const onScanSuccess = (decodedText: any, decodedResult: any) => {
+      // scanner.clear()
+      setScanResult(decodedText)
+      console.log(`onScanSuccess: ${decodedText} + ${decodedResult}`)
+    }
 
-  console.log('result', result)
+    const onScanError = (err: string) => {
+      // console.warn('onScanError scaning', err)
+    }
+
+    scanner.start(
+      { facingMode: { exact: 'environment' } },
+      config,
+      onScanSuccess,
+      onScanError,
+    )
+
+    // scanner.render(onScanSuccess, onScanError)
+  }, [])
+
+  console.log('result', scanResult)
 
   return (
     <>
-      <video ref={ref} className="h-full w-full object-cover" />
+      <div id="reader" className="" />
       <p className="text-red-500">
         <span>Last result:</span>
-        <span>{result}</span>
+        <span>{scanResult && scanResult}</span>
       </p>
     </>
   )

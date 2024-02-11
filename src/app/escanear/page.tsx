@@ -1,10 +1,11 @@
 'use client'
-import { Layout } from '@/components'
+import { BarCodeScanner, Layout } from '@/components'
 
 const Escanear = () => {
   return (
     <Layout hasMenuBottom>
       <div>Escanear</div>
+      <BarCodeScanner />
     </Layout>
   )
 }
