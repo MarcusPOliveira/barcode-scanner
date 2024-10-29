@@ -1,45 +1,73 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
-import { useEffect, useState } from 'react'
-import { useZxing } from 'react-zxing'
-import { BarcodeFormat, DecodeHintType } from '@zxing/library'
+import React, { useEffect } from 'react'
 
-export const BarCodeScanner = () => {
-  const [result, setResult] = useState('')
+import dynamic from 'next/dynamic'
+import { useTorch } from 'react-barcode-scanner'
 
-  const hints = new Map()
-  // const formats = [
-  //   BarcodeFormat.QR_CODE,
-  //   BarcodeFormat.DATA_MATRIX,
-  //   BarcodeFormat.CODE_128,
-  //   BarcodeFormat.EAN_13,
-  //   BarcodeFormat.EAN_8,
-  //   BarcodeFormat.CODE_39,
-  // ]
+interface BarcodeScannerProps {
+  onScanSuccess?: (decodedText: string) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onScanFailure?: (error: any) => void
+  onTorchSupportChange?: (isSupported: boolean) => void
+  onTorchSwitch?: () => void
+}
 
-  hints.set('POSSIBLE_FORMATS', ['CODE_128', 'EAN_13', 'EAN_8', 'CODE_39'])
+const BarcodeScanner = dynamic(
+  () => {
+    import('react-barcode-scanner/polyfill')
+    return import('react-barcode-scanner').then((mod) => mod.BarcodeScanner)
+  },
+  { ssr: false },
+)
 
-  const { ref } = useZxing({
-    onDecodeResult(result) {
-      setResult(result.getText())
-    },
-    hints,
-  })
+export const BarCodeScanner = ({
+  onScanSuccess,
+  onScanFailure,
+  onTorchSupportChange,
+  onTorchSwitch,
+}: BarcodeScannerProps) => {
+  const [isSupportTorch, isOpen, internalOnTorchSwitch] = useTorch()
 
-  console.log('result', result)
+  useEffect(() => {
+    if (onTorchSupportChange) {
+      onTorchSupportChange(isSupportTorch)
+    }
+  }, [isSupportTorch, onTorchSupportChange])
 
   return (
-    <>
-      <video
-        ref={ref}
-        className="h-full w-full bg-red-500 object-cover"
-        autoPlay
-        muted
-        playsInline
+    <div style={{ width: '100%', height: '100%' }}>
+      <BarcodeScanner
+        options={{
+          formats: [
+            // 'code_128',
+            // 'code_39',
+            'ean_13',
+            // 'ean_8',
+            // 'upc_a',
+            // 'upc_e',
+            'itf',
+            // 'codabar',
+            // 'code_93',
+          ],
+        }}
+        onCapture={(result) => {
+          console.log('format', result.format)
+          console.log('result', result)
+          const audio = new Audio('/sounds/beep.mp3')
+          audio.play()
+          if (onScanSuccess) onScanSuccess(result.rawValue)
+        }}
+        onError={(error) => {
+          console.log(`onError: ${error}'`)
+          onScanFailure && onScanFailure(error)
+        }}
       />
-      <p className="text-red-500">
-        <span>Last result:</span>
-        <span>{result}</span>
-      </p>
-    </>
+      {/* {isSupportTorch ? (
+        <button className="bg-red-500 mt-32" onClick={onTorchSwitch}>
+          Switch Torch
+        </button>
+      ) : null} */}
+    </div>
   )
 }
