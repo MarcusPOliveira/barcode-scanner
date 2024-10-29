@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-import { Button, Header, Layout, ProductsList } from '@/components'
 import { ListEnd } from 'lucide-react'
+
+import { Button, Header, Layout, ProductsList } from '@/components'
 
 const ListaDeProdutos = () => {
   const [isMounted, setIsMounted] = useState(false)

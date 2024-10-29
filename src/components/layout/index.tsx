@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
-import { usePathname } from 'next/navigation'
+
 import { Home, Settings, ScanBarcode, ListEnd, CheckCircle } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 import { MenuBottom } from '../menu_bottom'
 

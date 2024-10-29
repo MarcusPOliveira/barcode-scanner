@@ -1,8 +1,10 @@
 'use client'
 import { useState } from 'react'
+
 import { motion } from 'framer-motion'
 
 import { formatDatetime } from '@/utils'
+
 import { ProductCard } from './product_card'
 
 type Product = {
