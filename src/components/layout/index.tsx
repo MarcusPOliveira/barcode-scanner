@@ -8,14 +8,21 @@ import { MenuBottom } from '../menu_bottom'
 type LayoutProps = {
   children: ReactNode
   hasMenuBottom?: boolean
+  noPadding?: boolean
 }
 
-export const Layout = ({ children, hasMenuBottom = false }: LayoutProps) => {
+export const Layout = ({
+  children,
+  hasMenuBottom = false,
+  noPadding = false,
+}: LayoutProps) => {
   const param = usePathname()
 
   return (
     <div className="container fixed inset-0 flex h-screen w-screen flex-col overflow-hidden">
-      <main className="h-full w-full pb-40 pt-4">{children}</main>
+      <main className={`h-full w-full ${noPadding ? '' : 'px-6 pb-40 pt-4'}`}>
+        {children}
+      </main>
       {hasMenuBottom && (
         <MenuBottom.Root>
           <MenuBottom.Icon

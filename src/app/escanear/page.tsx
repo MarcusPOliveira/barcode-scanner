@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { BarCodeScanner, Layout } from '@/components'
 
 const Escanear = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [result, setResult] = useState<string>('')
 
   const handleScanFailure = (error: string) => {
@@ -16,14 +17,11 @@ const Escanear = () => {
   }
 
   return (
-    <Layout hasMenuBottom>
-      <div>Escanear</div>
+    <Layout hasMenuBottom noPadding>
       <BarCodeScanner
         onScanFailure={handleScanFailure}
         onScanSuccess={handleScanSuccess}
       />
-      <p>Result: </p>
-      <p>{result}</p>
     </Layout>
   )
 }

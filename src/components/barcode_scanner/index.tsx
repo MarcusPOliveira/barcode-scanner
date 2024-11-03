@@ -2,6 +2,7 @@
 'use client'
 import React, { useEffect } from 'react'
 
+import { Flashlight } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useTorch } from 'react-barcode-scanner'
 
@@ -9,8 +10,6 @@ interface BarcodeScannerProps {
   onScanSuccess?: (decodedText: string) => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onScanFailure?: (error: any) => void
-  onTorchSupportChange?: (isSupported: boolean) => void
-  onTorchSwitch?: () => void
 }
 
 const BarcodeScanner = dynamic(
@@ -24,16 +23,12 @@ const BarcodeScanner = dynamic(
 export const BarCodeScanner = ({
   onScanSuccess,
   onScanFailure,
-  onTorchSupportChange,
-  onTorchSwitch,
 }: BarcodeScannerProps) => {
-  const [isSupportTorch, isOpen, internalOnTorchSwitch] = useTorch()
+  const [isSupportTorch, isOpen, onTorchSwitch] = useTorch()
 
-  useEffect(() => {
-    if (onTorchSupportChange) {
-      onTorchSupportChange(isSupportTorch)
-    }
-  }, [isSupportTorch, onTorchSupportChange])
+  console.log('isSupportTorch', isSupportTorch)
+  console.log('isOpen', isOpen)
+  console.log('onTorchSwitch', onTorchSwitch)
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
@@ -50,6 +45,7 @@ export const BarCodeScanner = ({
             // 'codabar',
             // 'code_93',
           ],
+          delay: 500,
         }}
         onCapture={(result) => {
           console.log('format', result.format)
@@ -63,11 +59,15 @@ export const BarCodeScanner = ({
           onScanFailure && onScanFailure(error)
         }}
       />
-      {/* {isSupportTorch ? (
-        <button className="bg-red-500 mt-32" onClick={onTorchSwitch}>
-          Switch Torch
+      {isSupportTorch ? (
+        <button
+          type="button"
+          className="fixed bottom-32 right-5 z-50 rounded-full bg-slate-200 p-4"
+          onClick={onTorchSwitch}
+        >
+          <Flashlight />
         </button>
-      ) : null} */}
+      ) : null}
     </div>
   )
 }
