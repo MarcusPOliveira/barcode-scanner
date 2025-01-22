@@ -7,7 +7,7 @@ export const Header = () => {
         <div className="flex flex-col">
           <p className="text-2xl font-bold">Olá! 👋🏻</p>
           <p className="text-base ">
-            Bem-vindo(a) ao <span className="font-bold">Barcode Scanner!</span>
+            Bem-vindo(a) ao <span className="font-bold">ScanKeeps!</span>
           </p>
         </div>
         <UserAvatar />

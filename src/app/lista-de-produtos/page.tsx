@@ -1,20 +1,10 @@
-'use client'
-import { useEffect, useState } from 'react'
+
 
 import { ListEnd } from 'lucide-react'
 
 import { Button, Header, Layout, ProductsList } from '@/components'
 
 const ListaDeProdutos = () => {
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted) {
-    return null
-  }
 
   return (
     <Layout hasMenuBottom>

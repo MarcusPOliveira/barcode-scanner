@@ -1,3 +1,4 @@
+'use client'
 import { ScanBarcode, ListEnd, CheckCircle, BarChart3 } from 'lucide-react'
 
 import { ShortcurtCard } from './shortcut_card'

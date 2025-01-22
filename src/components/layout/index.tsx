@@ -1,3 +1,4 @@
+'use client'
 import { ReactNode } from 'react'
 
 import { Home, Settings, ScanBarcode, ListEnd, CheckCircle } from 'lucide-react'
