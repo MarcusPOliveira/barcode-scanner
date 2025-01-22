@@ -143,11 +143,11 @@ export const ProductsList = () => {
   }
 
   return (
-    <section className="scrollbar-hide ssm h-[400px] overflow-y-auto py-6">
+    <section className="scrollbar-hide ssm h-[calc(100%-110px)] overflow-y-auto py-6">
       <div className="flex items-center justify-between">
-        <p className="text-xl font-bold">Lista de Produtos</p>
+        <p className="text-lg font-bold">Lista de Produtos - {products.length} itens</p>
         <motion.span
-          className="text-sm"
+          className="text-xs"
           onClick={toggleSelectAll}
           whileTap={{ scale: 0.9 }}
         >
