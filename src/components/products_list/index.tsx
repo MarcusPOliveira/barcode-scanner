@@ -5,7 +5,12 @@ import { motion } from 'framer-motion'
 
 import { formatDatetime } from '@/utils'
 
+import emptyListAnimation from '../../../public/animations/empty.json'
+
 import { ProductCard } from './product_card'
+import { Animation, Button } from '@/components'
+import { ListEnd } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 type Product = {
   id: string
@@ -89,9 +94,12 @@ type GroupedProducts = {
 
 export const ProductsList = () => {
   const [products, setProducts] = useState<Product[]>(ProductsListMock)
+  // const [products, setProducts] = useState<Product[]>([])
+
+  const router = useRouter()
 
   const sortedProducts = [...products].sort(
-    (a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime(),
+    (a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
   )
 
   const groupedProducts: GroupedProducts[] = sortedProducts.reduce(
@@ -114,7 +122,7 @@ export const ProductsList = () => {
 
       return acc
     },
-    [] as GroupedProducts[],
+    [] as GroupedProducts[]
   )
 
   const toggleSelect = (id: string) => {
@@ -122,19 +130,21 @@ export const ProductsList = () => {
       products.map((product) =>
         product.id === id
           ? { ...product, isSelected: !product.isSelected }
-          : product,
-      ),
+          : product
+      )
     )
   }
 
   const toggleSelectAll = () => {
+    if (products.length === 0) return
+
     const allSelected = products.every((product) => product.isSelected)
 
     setProducts(
       products.map((product) => ({
         ...product,
         isSelected: !allSelected,
-      })),
+      }))
     )
   }
 
@@ -143,9 +153,11 @@ export const ProductsList = () => {
   }
 
   return (
-    <section className="scrollbar-hide ssm h-[calc(100%-110px)] overflow-y-auto py-6">
+    <section className="scrollbar-hide ssm h-full py-6">
       <div className="flex items-center justify-between">
-        <p className="text-lg font-bold">Lista de Produtos - {products.length} itens</p>
+        <p className="text-lg font-bold">
+          Lista de Produtos - {products.length} itens
+        </p>
         <motion.span
           className="text-xs"
           onClick={toggleSelectAll}
@@ -154,31 +166,52 @@ export const ProductsList = () => {
           Selecionar todos
         </motion.span>
       </div>
-      <div className="flex flex-col items-center justify-center">
-        {groupedProducts.map((group, groupIndex) => (
-          <div key={groupIndex} className="mt-5 flex w-full flex-col gap-4">
-            <div className="flex items-center justify-between ">
-              <p className="text-lg font-bold">{group.date}</p>
-              <div className="mx-2 flex-grow border-t border-black/60" />
-              <p className="text-sm opacity-60">
-                {group.products.length}{' '}
-                {group.products.length > 1 ? 'itens' : 'item'}
-              </p>
+      <div className=" flex h-[calc(100%-110px)] flex-col items-center justify-center overflow-y-auto">
+        {Array.isArray(groupedProducts) && groupedProducts.length > 0 ? (
+          groupedProducts.map((group, groupIndex) => (
+            <div key={groupIndex} className="mt-5 flex w-full flex-col gap-4">
+              <div className="flex items-center justify-between ">
+                <p className="text-lg font-bold">{group.date}</p>
+                <div className="mx-2 flex-grow border-t border-black/60" />
+                <p className="text-sm opacity-60">
+                  {group.products.length}{' '}
+                  {group.products.length > 1 ? 'itens' : 'item'}
+                </p>
+              </div>
+              {group.products.map((product, index) => (
+                <ProductCard
+                  key={index}
+                  id={product.id}
+                  ean={product.ean}
+                  datetime={product.datetime}
+                  isSelected={product.isSelected}
+                  setIsSelected={() => toggleSelect(product.id)}
+                  handleDeleteItem={() => handleDeleteItem(product.id)}
+                />
+              ))}
             </div>
-            {group.products.map((product, index) => (
-              <ProductCard
-                key={index}
-                id={product.id}
-                ean={product.ean}
-                datetime={product.datetime}
-                isSelected={product.isSelected}
-                setIsSelected={() => toggleSelect(product.id)}
-                handleDeleteItem={() => handleDeleteItem(product.id)}
-              />
-            ))}
+          ))
+        ) : (
+          <div className="flex h-[500px] w-full flex-col items-center justify-center overflow-hidden">
+            <Animation animationData={emptyListAnimation} />
+            <p className="mt-10 flex text-sm font-medium">
+              Nenhum item em sua lista
+            </p>
           </div>
-        ))}
+        )}
       </div>
+
+      <Button
+        className="mt-4 w-full bg-emerald-400 font-medium text-zinc-800"
+        onClick={() => {
+          groupedProducts.length > 0
+            ? console.log('Adicionar')
+            : router.push('/escanear')
+        }}
+      >
+        <ListEnd />
+        {groupedProducts.length > 0 ? 'Adicionar' : 'Scanear'}
+      </Button>
     </section>
   )
 }
